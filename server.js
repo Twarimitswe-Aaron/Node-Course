@@ -6,7 +6,7 @@ const courses=[
     {id:1,name:"Eng"},
 ]
 
-//Getting data in general and by specific id
+
 app.use(express.json());
 app.get('/', (req,res)=>{
     res.send(courses);
@@ -21,8 +21,7 @@ app.get('/:id', (req,res)=>{
 app.post('/newCourse', (req,res)=>{
     const {error}=ValidateCourse(req.body)
     if(error){
-        res.status(404).send(error.details[0].message);
-        return
+        return res.status(404).send(error.details[0].message); 
     }
     const course={
         id:courses.length+1,
@@ -39,8 +38,8 @@ app.put('/updateCourse/:id', (req,res)=>{
 
     const {error}=ValidateCourse(req.body);
     if(error){
-        res.status(404).send(error)
-        return;
+        return res.status(404).send(error)
+        
     }
     course.name=req.body.name;
     res.status(200).send(course);
@@ -53,6 +52,16 @@ function ValidateCourse(data){
 
     return result.validate(data);
 }
+
+app.delete('/deleteCourse/:id',(req,res)=>{
+    const course=courses.find(c=> c.id===parseInt(req.params.id));
+    if(!course)res.status(404).send("course not found").end();
+
+    const index=courses.indexOf(course);
+    courses.splice(index,1);
+    return res.send(course);
+
+})
 
 app.listen(3000,()=>{
     console.log("Server is runningg.....at http://localhost:3000");
