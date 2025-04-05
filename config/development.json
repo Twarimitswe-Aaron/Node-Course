@@ -1,0 +1,7 @@
+{
+    "name":"Dev",
+    "mail":{
+        "host":"google-dev",
+        "password":"123"
+    }
+}

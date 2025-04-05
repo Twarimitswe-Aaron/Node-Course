@@ -1,0 +1,7 @@
+{
+    "name":"Prod",
+    "mail":{
+        "host":"google-prod",
+        "password":"123"
+    }
+}
